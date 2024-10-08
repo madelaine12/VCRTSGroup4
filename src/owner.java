@@ -1,6 +1,6 @@
 import javax.swing.*;
 public class owner {
-    public JFrame ownerFrame = new JFrame("Owner Dashboard");
+    private JFrame ownerFrame = new JFrame("Owner Dashboard");
 
     public void getOwnerFrame() {
         ownerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
