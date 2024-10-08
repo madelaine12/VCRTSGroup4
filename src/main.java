@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class main {
     public static void main(String[] args) {
 
@@ -30,9 +33,26 @@ public class main {
         //Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        //These are the buttons
+        //Declare the buttons
         JButton selectUser = new JButton("User");
         JButton selectOwner = new JButton("Owner");
+
+        //Give buttons the function
+        selectUser.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainFrame.setVisible(false);
+                new user().getUserFrame();
+            }
+        });
+
+        selectOwner.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                mainFrame.setVisible(false);
+                new owner().getOwnerFrame();
+            }
+        });
 
         //Add the buttons to the panel
         buttonPanel.add(selectOwner);
