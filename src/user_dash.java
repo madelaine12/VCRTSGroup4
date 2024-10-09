@@ -9,31 +9,57 @@ import java.io.IOException;
 public class user_dash extends JFrame implements ActionListener {
     private JTextField userIDField, jobDurationField, jobDeadlineField;
     private JButton submitButton, clearButton, signOutButton, helpButton;
+    private JPanel mainPanel, buttonPanel;
 
     public user_dash() {
         setTitle("Vehicular Cloud Console");
-        setSize(400, 400);
+        setSize(400, 300);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new GridLayout(5, 2));
+        setLayout(new BorderLayout());
+
+        // Main panel
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(4, 2, 10, 10));
+        mainPanel.setBackground(new Color(240, 240, 240)); // Light gray background
 
         // Client fields
-        add(new JLabel("Client ID:"));
+        JLabel userIDLabel = new JLabel("Client ID:");
+        JLabel jobDurationLabel = new JLabel("Job Duration:");
+        JLabel jobDeadlineLabel = new JLabel("Job Deadline:");
+
         userIDField = new JTextField();
-        add(userIDField);
-
-        add(new JLabel("Job Duration:"));
         jobDurationField = new JTextField();
-        add(jobDurationField);
-
-        add(new JLabel("Job Deadline:"));
         jobDeadlineField = new JTextField();
-        add(jobDeadlineField);
+
+        Font labelFont = new Font("Arial", Font.PLAIN, 16);
+        userIDLabel.setFont(labelFont);
+        jobDurationLabel.setFont(labelFont);
+        jobDeadlineLabel.setFont(labelFont);
+
+        mainPanel.add(userIDLabel);
+        mainPanel.add(userIDField);
+        mainPanel.add(jobDurationLabel);
+        mainPanel.add(jobDurationField);
+        mainPanel.add(jobDeadlineLabel);
+        mainPanel.add(jobDeadlineField);
+
+        // Button panel
+        buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(Color.WHITE);
 
         submitButton = new JButton("Submit");
-        submitButton.addActionListener(this);
-        add(submitButton);
-
         clearButton = new JButton("Clear");
+        signOutButton = new JButton("Sign Out");
+        helpButton = new JButton("Help");
+
+        // Customize button colors and fonts
+        customizeButton(submitButton);
+        customizeButton(clearButton);
+        customizeButton(signOutButton);
+        customizeButton(helpButton);
+
+        // Add action listeners
+        submitButton.addActionListener(this);
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,31 +68,41 @@ public class user_dash extends JFrame implements ActionListener {
                 jobDeadlineField.setText("");
             }
         });
-        add(clearButton);
-
-        signOutButton = new JButton("Sign Out");
         signOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 userIDField.setText("");
                 jobDurationField.setText("");
                 jobDeadlineField.setText("");
-                main.getMainFrame();
+                main.getMainFrame(); // Navigate back to main dashboard
                 dispose();
             }
         });
-        add(signOutButton);
-
-        helpButton = new JButton("Help");
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "I thought this was simple enough.");
+                JOptionPane.showMessageDialog(null, "Enter valid details and click submit.");
             }
         });
-        add(helpButton);
-        setLocationRelativeTo(null);
+
+        // Add buttons to button panel
+        buttonPanel.add(submitButton);
+        buttonPanel.add(clearButton);
+        buttonPanel.add(signOutButton);
+        buttonPanel.add(helpButton);
+
+        // Add panels to the frame
+        add(mainPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        setLocationRelativeTo(null); // Center window
         setVisible(true);
+    }
+
+    private void customizeButton(JButton button) {
+        button.setBackground(new Color(100, 150, 250)); // Set button color
+        button.setForeground(Color.WHITE);              // Set text color
+        button.setFont(new Font("Arial", Font.BOLD, 14)); // Set font style
     }
 
     @Override
@@ -88,5 +124,4 @@ public class user_dash extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(this, "Error saving data.");
         }
     }
-
 }
